@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\City;
 
 class NewsController extends Controller
 {
-    public function news()
+    public function news($slug)
     {
-        return view('news');
+        $city = City::where('slug', $slug)->firstOrFail();
+        $news = $city->news;
+        return view('news', compact('city', 'news'));
     }
 }
