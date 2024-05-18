@@ -48,4 +48,4 @@ class CityParser
     }
 }
 
-//php artisan cities:parse  запуск
+//php artisan cities:parse запуск
