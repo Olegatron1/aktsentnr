@@ -17,9 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['App\Http\Controllers'], function () {
-    Route::get('/', [IndexController::class, 'index']);
-    Route::get('/about', [AboutController::class, 'about']);
-    Route::get('/news', [NewsController::class, 'news']);
-    Route::get('/{slug}', [IndexController::class, 'show']);
-});
+Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/about', [AboutController::class, 'about'])->name('about');
+Route::get('/{slug}', [IndexController::class, 'show'])->name('city.show');
+Route::get('/{slug}/news', [NewsController::class, 'index'])->name('news.index');
+

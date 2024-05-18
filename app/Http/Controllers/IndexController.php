@@ -15,7 +15,6 @@ class IndexController extends Controller
     public function show($slug)
     {
         $city = City::where('slug', $slug)->firstOrFail();
-        $news = $city->news;
-        return view('news', compact('city', 'news'));
+        return view('city', compact('city'));
     }
 }

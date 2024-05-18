@@ -47,5 +47,3 @@ class CityParser
         return Str::slug($name);
     }
 }
-
-//php artisan cities:parse  запуск
