@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-class AboutController extends Controller
+use Illuminate\Contracts\View\View;
+
+final class AboutController extends Controller
 {
-    public function about()
+    public function about(): View
     {
         return view('about');
     }
+
 }
+

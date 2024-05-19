@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
+use App\Services\CityService;
+use Illuminate\Contracts\View\View;
 
-class NewsController extends Controller
+final class NewsController extends Controller
 {
-    public function index($slug)
+    protected CityService $cityService;
+
+    public function __construct(CityService $cityService)
     {
-        $city = City::where('slug', $slug)->firstOrFail();
+        $this->cityService = $cityService;
+    }
+
+    public function index(string $slug): View
+    {
+        $city = $this->cityService->findBySlugOrFail($slug);
         $news = $city->news;
+
         return view('news', compact('city', 'news'));
     }
+
 }

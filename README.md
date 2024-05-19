@@ -1,13 +1,15 @@
-1) composer require laravel/ui 
+1) composer install 
 
-2) php artisan ui bootstrap
+2) composer require laravel/ui 
 
-3) npm install
+3) php artisan ui bootstrap
 
-4) npm run dev
+4) npm install
 
-5) php artisan migrate
+5) npm run dev
 
-6) artisan cities:parse // наполняет бд, данными из api
+6) php artisan migrate
 
-7) php artisan serve
+7) php artisan cities:parse // наполняет бд, данными из api
+
+8) php artisan serve

@@ -5,15 +5,17 @@ namespace App\Services;
 use App\Models\City;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class CityParser
 {
-    public function parseAndSaveCitiesFromAPI()
+    public function parseAndSaveCitiesFromAPI(): void
     {
-        $response = Http::withOptions(['verify' => false])->get('https://api.hh.ru/areas');
+        $response = Http::withOptions(['verify' => false])->get(config('services.hh_api.url'));
 
         if ($response->successful()) {
             $areas = $response->json();
+
             foreach ($areas as $area) {
                 if (isset($area['areas'])) {
                     $this->saveCities($area['areas']);
@@ -22,7 +24,7 @@ class CityParser
                 }
             }
         } else {
-            return 'error: Failed to fetch data from API';
+            throw new BadRequestHttpException(message: 'Failed to fetch data from API');
         }
     }
 
@@ -30,7 +32,7 @@ class CityParser
     {
         foreach ($areas as $area) {
             if (isset($area['name'])) {
-                City::create([
+                City::query()->create([
                     'name' => $area['name'],
                     'slug' => $this->generateSlug($area['name'])
                 ]);
@@ -42,7 +44,7 @@ class CityParser
         }
     }
 
-    protected function generateSlug($name): string
+    protected function generateSlug(string $name): string
     {
         return Str::slug($name);
     }

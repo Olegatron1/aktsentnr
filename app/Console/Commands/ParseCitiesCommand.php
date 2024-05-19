@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Services\CityParser;
 use Illuminate\Console\Command;
 
-class ParseCitiesCommand extends Command
+final class ParseCitiesCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -24,11 +24,13 @@ class ParseCitiesCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $cityParser = new CityParser();
         $cityParser->parseAndSaveCitiesFromAPI();
 
-        $this->info('Cities have been successfully parsed and saved');
+        $this->info('Cities have been successfully parsed and saved.');
+
     }
+
 }

@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'hh_api' => [
+        'url' => env('HH_API_URL', default: 'https://api.hh.ru/areas'),
+    ],
+
 ];

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\CityController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
@@ -17,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/', [IndexController::class, 'redirectToCity'])->name('index');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
-Route::get('/{slug}', [IndexController::class, 'show'])->name('city.show');
-Route::get('/{slug}/news', [NewsController::class, 'index'])->name('news.index');
+
+Route::prefix('{slug}')->middleware('set.city')->group(function () {
+    Route::get('/', [IndexController::class, 'show'])->name('city.show');
+    Route::get('/about', [AboutController::class, 'about'])->name('city.about');
+    Route::get('/news', [NewsController::class, 'index'])->name('city.news');
+});
 

@@ -11,10 +11,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Главная</a>
+                <a class="nav-link" href="{{ route('index') }}">Главная</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/about">О нас</a>
+                <a class="nav-link" href="{{ session('city_slug') ? route('city.about', ['slug' => session('city_slug')]) : route('city.about') }}">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ session('city_slug') ? route('city.news', ['slug' => session('city_slug')]) : route('city.news') }}">Новости</a>
             </li>
         </ul>
     </div>

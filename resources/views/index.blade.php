@@ -3,7 +3,7 @@
 @section('title', 'Главная страница')
 
 @section('header')
-
+    <h5>Текущий город: {{ session('city_slug') ? $cities->firstWhere('slug', session('city_slug'))->name : 'Не выбран' }}</h5>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
             </div>
             <ul class="list-group" id="cityList">
                 @foreach($cities as $city)
-                    <a href="/{{$city->slug}}">
+                    <a href="{{ route('city.show', ['slug' => $city->slug]) }}">
                         <li class="list-group-item">{{ $city->name }}</li>
                     </a>
                 @endforeach

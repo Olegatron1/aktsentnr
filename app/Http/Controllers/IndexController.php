@@ -2,19 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
+use App\Services\CityService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
+    protected CityService $cityService;
+
+    public function __construct(CityService $cityService)
     {
-        $cities = City::all();
+        $this->cityService = $cityService;
+    }
+
+    public function redirectToCity(Request $request): View|Application|Factory|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    {
+        if (session()->has('city_slug')) {
+            return redirect()->route('city.show', ['slug' => session('city_slug')]);
+        }
+
+        $cities = $this->cityService->getAllCities();
+
         return view('index', compact('cities'));
     }
 
-    public function show($slug)
+    public function show(string $slug): View
     {
-        $city = City::where('slug', $slug)->firstOrFail();
-        return view('city', compact('city'));
+        $cities = $this->cityService->getAllCities();
+        $city = $this->cityService->findBySlugOrFail($slug);
+
+        return view('city', compact('cities', 'city'));
     }
+
 }
+
